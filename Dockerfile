@@ -34,26 +34,29 @@ RUN wget http://download.osgeo.org/liblas/libLAS-1.8.1.tar.bz2 \
     && make install \
     && ldconfig
 
-# Clonar PCL desde la etiqueta pcl-1.14.0
-RUN git clone https://github.com/PointCloudLibrary/pcl.git /opt/pcl && \
-    cd /opt/pcl && \
-    git checkout tags/pcl-1.14.0 && \
+# Clonar PCL desde la etiqueta pcl-1.8.0
+RUN git clone https://github.com/PointCloudLibrary/pcl.git /pcl && \
+    cd /pcl && \
+    git checkout tags/pcl-1.8.0 && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release && \
+    cmake -DCMAKE_BUILD_TYPE=Release ..  && \
     make -j4 && \
     make install && \
     ldconfig
 
-# Clonar el repositorio GH-ICP
-RUN git clone https://github.com/YuePanEdward/GH-ICP.git /app
+# # Clonar el repositorio GH-ICP
+RUN git clone https://github.com/ramiro999/GH-ICP.git /app
 
-# Crear el directorio de compilación y compilar el código
+# # Crear el directorio de compilación y compilar el código
 WORKDIR /app
+
+RUN apt-get update && apt -y install libgoogle-glog-dev
+
 RUN mkdir build && \
-    cd build && \
-    cmake .. && \
-    make
+     cd build && \
+     cmake .. && \
+     make
 
 # Copiar los archivos de scripts
 COPY script/run.sh /app/script/run.sh
