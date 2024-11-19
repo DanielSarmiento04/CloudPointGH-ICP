@@ -58,14 +58,13 @@ RUN mkdir build && \
      cmake .. && \
      make
 
-# Copiar los archivos de scripts
-COPY script/run.sh /app/script/run.sh
+# Copiar el script de entrada
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-# Hacer el script ejecutable
-RUN chmod +x /app/script/run.sh
+# Establecer el punto de entrada
+ENTRYPOINT ["/entrypoint.sh"]
 
-# Establecer el punto de entrada al script
-ENTRYPOINT ["/app/script/run.sh"]
 
 # Instrucciones para ejecutar el contenedor
 # docker build -t gh-icp .
