@@ -3,7 +3,6 @@
 
 # Montar los directorios necesarios y ejecutar el contenedor
 docker run -it --rm \
-    -v $(pwd)/cloudpoints:/gh_icp/GH-ICP/samples:rw \
     -e DISPLAY \
     --security-opt label=type:container_runtime_t \
-    gh-icp /gh_icp/GH-ICP/samples/bunny/source.pcd /gh_icp/GH-ICP/samples/bunny/target.pcd
+    cloudpointgh-icp /app/samples/bunny/source.pcd /app/samples/bunny/target.pcd /app/samples/bunny/output.pcd

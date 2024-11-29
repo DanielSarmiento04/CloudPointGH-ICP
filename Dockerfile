@@ -34,10 +34,10 @@ RUN wget http://download.osgeo.org/liblas/libLAS-1.8.1.tar.bz2 \
     && make install \
     && ldconfig
 
-# Clonar PCL desde la etiqueta pcl-1.8.0
+# Clonar PCL desde la etiqueta pcl-1.7.2
 RUN git clone https://github.com/PointCloudLibrary/pcl.git /pcl && \
     cd /pcl && \
-    git checkout tags/pcl-1.8.0 && \
+    git checkout tags/pcl-1.7.2 && \
     mkdir build && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release ..  && \
@@ -46,7 +46,7 @@ RUN git clone https://github.com/PointCloudLibrary/pcl.git /pcl && \
     ldconfig
 
 # # Clonar el repositorio GH-ICP
-RUN git clone https://github.com/ramiro999/GH-ICP.git /app
+RUN git clone https://github.com/ramiro999/GH-ICP /app
 
 # # Crear el directorio de compilación y compilar el código
 WORKDIR /app
@@ -57,6 +57,8 @@ RUN mkdir build && \
      cd build && \
      cmake .. && \
      make
+
+RUN chmod +x /app/bin/ghicp
 
 # Copiar el script de entrada
 COPY ./entrypoint.sh /
